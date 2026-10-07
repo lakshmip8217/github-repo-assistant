@@ -1,0 +1,52 @@
+:host { display: block; }
+.topbar { background: white; border-bottom: 1px solid #e3e8f0; padding: 22px max(24px, calc((100vw - 1120px) / 2)); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 16px; font-weight: 700; }
+.brand-icon { display: block; width: 38px; height: 38px; flex-shrink: 0; }
+.hint, footer { color: #657187; font-size: 13px; }
+main { max-width: 1120px; margin: auto; padding: 0 24px; }
+.intro { padding: 66px 0 32px; max-width: 760px; margin: auto; }
+.eyebrow { font-size: 11px; font-weight: 750; letter-spacing: 2px; color: #3863ad; margin: 0 0 20px; }
+h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.15; letter-spacing: -1.7px; margin: 0 0 18px; }
+.subtitle { color: #657187; line-height: 1.7; font-size: 16px; margin-bottom: 32px; }
+label { display: block; font-size: 13px; font-weight: 650; margin-bottom: 10px; }
+.search-row { display: flex; gap: 12px; }
+.input-wrap { display: flex; align-items: center; background: white; border: 1px solid #cbd4e1; border-radius: 9px; flex: 1; min-width: 0; padding-left: 16px; color: #657187; }
+input { width: 100%; min-width: 0; border: 0; background: transparent; padding: 15px 12px; color: #172438; border-radius: 9px; }
+button { border: 0; border-radius: 9px; padding: 14px 20px; background: #245ac0; color: white; font-weight: 650; cursor: pointer; }
+button:hover { background: #1d489a; }
+button:disabled { opacity: .65; cursor: wait; }
+button span { margin-left: 12px; }
+.hint { margin-top: 12px; }
+.results { border-top: 1px solid #e3e8f0; padding-top: 28px; min-height: 300px; }
+.results-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; }
+h2 { font-size: 18px; margin: 0; overflow-wrap: anywhere; }
+h2 span { color: #657187; font-size: 14px; font-weight: 400; }
+.count { font-size: 12px; white-space: nowrap; color: #657187; }
+.repo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.repo-card { padding: 24px; border: 1px solid #dfe5ee; border-radius: 12px; background: white; display: flex; flex-direction: column; }
+.card-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+h3 { font-size: 17px; margin: 0; overflow-wrap: anywhere; }
+h3 a { color: #245ac0; text-decoration: none; }
+h3 a:hover { text-decoration: underline; }
+.badge { font-size: 11px; border: 1px solid #dfe5ee; border-radius: 20px; padding: 3px 9px; color: #657187; }
+.owner { color: #657187; font-size: 12px; margin: 9px 0 0; overflow-wrap: anywhere; }
+.description { font-size: 14px; line-height: 1.65; color: #536176; flex: 1; margin: 20px 0 26px; overflow-wrap: anywhere; }
+.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; color: #657187; font-size: 12px; }
+.language { color: #344b6a; }
+.language::before { content: ''; display: inline-block; width: 8px; height: 8px; background: #537ec8; border-radius: 50%; margin-right: 7px; }
+.tags { display: flex; gap: 6px; margin-top: 14px; }
+.empty { text-align: center; padding: 40px 16px 56px; color: #657187; }
+.empty h2, .empty h3 { color: #344b6a; font-size: 18px; }
+.empty p { font-size: 14px; line-height: 1.7; }
+.empty-icon { display: inline-block; font-size: 28px; margin-bottom: 22px; color: #8a9bb4; }
+.error { padding: 18px; margin-bottom: 24px; background: #fff1ef; color: #983c32; border: 1px solid #f2cdc7; border-radius: 9px; line-height: 1.6; }
+.status { color: #536176; }
+.pagination { text-align: center; padding: 28px; }
+.secondary { background: white; color: #245ac0; border: 1px solid #cbd4e1; }
+.secondary:hover { background: #edf3ff; }
+footer { text-align: center; padding: 30px 0; border-top: 1px solid #e3e8f0; margin-top: 24px; }
+@media (max-width: 640px) { .intro { padding-top: 40px; } .search-row { flex-direction: column; } .repo-grid { grid-template-columns: 1fr; } .results-heading { align-items: flex-start; } h2 span { display: block; margin-top: 6px; } }
+
+.repo-url { margin: 18px 0 0; font-size: 12px; line-height: 1.6; }
+.repo-url span { display: block; color: #657187; margin-bottom: 4px; }
+.repo-url a { color: #245ac0; overflow-wrap: anywhere; }

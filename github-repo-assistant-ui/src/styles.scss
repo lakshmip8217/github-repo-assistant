@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+* { box-sizing: border-box; }
+body { margin: 0; background: #f7f9fc; color: #172438; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+button, input { font: inherit; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid #4675d3; outline-offset: 4px; }
+a { color: inherit; }
