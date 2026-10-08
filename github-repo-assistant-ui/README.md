@@ -4,6 +4,10 @@ Search for a GitHub username to browse public repositories, descriptions,
 languages, stars, and forks. Repository links open GitHub in a new tab.
 Use **Load more repositories** to fetch additional pages of 30 results.
 
+Select **Analyze this repository** on any repository card to ask a question. The
+assistant indexes a bounded set of public README and source files for that
+repository and shows the retrieved excerpts with links to their GitHub files.
+
 ## Local development
 
 1. Start the Spring Boot service in `../github-repo-assistant-svc` with `./mvnw spring-boot:run` (port 8080).

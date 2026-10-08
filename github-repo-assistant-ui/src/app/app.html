@@ -31,13 +31,30 @@
     }
     <div class="repo-grid">
       @for (repo of repositories(); track repo.id) {
-        <article class="repo-card">
+        <article class="repo-card" [class.selected-repo]="selectedRepository()?.id === repo.id">
           <div class="card-heading"><h3><a [href]="repo.htmlUrl" target="_blank" rel="noopener noreferrer">{{ repo.name }} <span aria-hidden="true">↗</span></a></h3><span class="badge">Public</span></div>
           <p class="owner">{{ repo.fullName }}</p>
           <p class="description">{{ repo.description || 'No description provided.' }}</p>
           <div class="metadata"><span class="language">{{ repo.language || 'No language listed' }}</span><span aria-label="Stars">☆ {{ repo.stargazersCount }}</span><span>Forks {{ repo.forksCount }}</span></div>
           <p class="repo-url"><span>GitHub URL</span><a [href]="repo.htmlUrl" target="_blank" rel="noopener noreferrer">{{ repo.htmlUrl }}</a></p>
+          <button class="analyze-button" type="button" (click)="selectRepository(repo)">Analyze this repository <span aria-hidden="true">→</span></button>
           @if (repo.fork || repo.archived) { <div class="tags">@if (repo.fork) { <span class="badge">Fork</span> } @if (repo.archived) { <span class="badge">Archived</span> }</div> }
+          @if (selectedRepository()?.id === repo.id) {
+            <section id="repository-assistant" class="assistant-panel" aria-labelledby="assistant-heading">
+              <div class="assistant-heading"><div><p class="eyebrow">REPOSITORY RAG</p><h2 id="assistant-heading">Ask about {{ repo.name }}</h2><p>Searches the repository README and a limited set of public source files, then returns cited passages.</p></div><button class="close-button" type="button" (click)="closeAssistant()" aria-label="Close repository assistant">×</button></div>
+              <form (ngSubmit)="askQuestion()" class="question-form">
+                <label for="question">Question</label>
+                <textarea id="question" name="question" [ngModel]="question()" (ngModelChange)="question.set($event)" maxlength="500" placeholder="What does this repository do?" required></textarea>
+                <button type="submit" [disabled]="asking() || !question().trim()">{{ asking() ? 'Indexing and searching…' : 'Ask repository' }}</button>
+              </form>
+              @if (questionError()) { <div class="error" role="alert">{{ questionError() }}</div> }
+              @if (answer(); as result) {
+                <div class="answer" aria-live="polite"><p>{{ result.answer }}</p><p class="index-summary">{{ result.modelGenerated ? 'AI answer grounded in' : 'Retrieved from' }} {{ result.indexedFiles }} files and {{ result.indexedChunks }} chunks.</p>
+                  @if (result.sources.length) { <h3>Sources</h3><div class="source-list">@for (source of result.sources; track source.url) { <article class="source"><a [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.path }} ↗</a><p>{{ source.excerpt }}</p></article> }</div> }
+                </div>
+              }
+            </section>
+          }
         </article>
       }
     </div>

@@ -62,6 +62,25 @@ describe('Repository explorer', () => {
     expect(fixture.nativeElement.textContent).toContain('No public repositories yet');
   });
 
+  it('asks the selected repository and renders cited sources', () => {
+    const fixture = setup();
+    const app = fixture.componentInstance;
+    app.repositories.set([repo]);
+    app.selectRepository(repo);
+    app.question.set('What does this project do?');
+    app.askQuestion();
+    const request = http.expectOne('/api/github/repos/octocat/demo/questions');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual({ question: 'What does this project do?' });
+    request.flush({
+      answer: 'Relevant passages were found.', indexedFiles: 2, indexedChunks: 3, modelGenerated: true,
+      sources: [{ path: 'README.md', url: 'https://github.com/octocat/demo/blob/main/README.md', excerpt: 'A public project.' }],
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Relevant passages were found.');
+    expect(fixture.nativeElement.querySelector('.source a')?.getAttribute('href')).toContain('README.md');
+  });
+
   it.each([404, 503, 502, 0])('handles HTTP %s failures', status => {
     const fixture = setup();
     fixture.componentInstance.username = 'octocat';

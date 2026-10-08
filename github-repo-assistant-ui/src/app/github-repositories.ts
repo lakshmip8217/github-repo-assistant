@@ -15,6 +15,20 @@ export interface Repository {
   archived: boolean;
 }
 
+export interface RepositorySource {
+  path: string;
+  url: string;
+  excerpt: string;
+}
+
+export interface RepositoryAnswer {
+  answer: string;
+  sources: RepositorySource[];
+  indexedFiles: number;
+  indexedChunks: number;
+  modelGenerated: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class GitHubRepositories {
   private readonly http = inject(HttpClient);
@@ -24,5 +38,13 @@ export class GitHubRepositories {
       params: { page, per_page: 30 },
       timeout: 20000,
     });
+  }
+
+  askRepository(owner: string, repository: string, question: string) {
+    return this.http.post<RepositoryAnswer>(
+      `/api/github/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}/questions`,
+      { question },
+      { timeout: 60000 },
+    );
   }
 }

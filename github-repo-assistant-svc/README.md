@@ -58,3 +58,23 @@ Contract reference: [GitHub REST API: list repositories for a user](https://docs
 
 Run automated tests with `./mvnw test`. Tests mock GitHub and require no token or
 live GitHub connection.
+
+## Ask a repository
+
+```sh
+curl -X POST 'http://localhost:8080/api/github/repos/octocat/Hello-World/questions' \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"What does this repository do?"}'
+```
+
+The endpoint retrieves the default branch's README and up to 19 additional small,
+text-based source files. It splits the files into overlapping chunks, ranks chunks
+against the question, and returns up to three cited excerpts with GitHub links.
+The index is in memory only and is rebuilt for each question. This bounded lexical
+retrieval slice is the foundation for adding persistent vector embeddings and an
+LLM-generated answer in a later iteration.
+
+To enable model-generated, source-grounded answers, set `OPENAI_API_KEY` before
+starting the service. The service calls the OpenAI Responses API with `store: false`
+and uses `gpt-6-astra` by default; override the model with `openai.model`. Without
+an API key, the endpoint continues to return ranked, cited repository excerpts.
